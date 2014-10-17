@@ -54,7 +54,6 @@
 	};
 };
 
-
 &modem_pil {
 	/delete-property/ linux,contiguous-region;
 };
