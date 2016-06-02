@@ -5531,7 +5531,7 @@ static struct pmu perf_swevent = {
 	.read		= perf_swevent_read,
 
 	.event_idx	= perf_swevent_event_idx,
-	.events_across_hotplug = 1,
+	.events_across_hotplug = 0,
 };
 
 #ifdef CONFIG_EVENT_TRACING
@@ -5651,7 +5651,7 @@ static struct pmu perf_tracepoint = {
 	.read		= perf_swevent_read,
 
 	.event_idx	= perf_swevent_event_idx,
-	.events_across_hotplug = 1,
+	.events_across_hotplug = 0,
 };
 
 static inline void perf_tp_register(void)
@@ -5879,7 +5879,7 @@ static struct pmu perf_cpu_clock = {
 	.read		= cpu_clock_event_read,
 
 	.event_idx	= perf_swevent_event_idx,
-	.events_across_hotplug = 1,
+	.events_across_hotplug = 0,
 };
 
 /*
@@ -5960,7 +5960,7 @@ static struct pmu perf_task_clock = {
 	.read		= task_clock_event_read,
 
 	.event_idx	= perf_swevent_event_idx,
-	.events_across_hotplug = 1,
+	.events_across_hotplug = 0,
 };
 
 static void perf_pmu_nop_void(struct pmu *pmu)
