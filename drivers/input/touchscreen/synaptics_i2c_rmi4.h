@@ -36,10 +36,6 @@
 #endif
 #include <linux/debugfs.h>
 #include <linux/time.h>
-#if defined(CONFIG_SECURE_TOUCH)
-#include <linux/completion.h>
-#include <linux/atomic.h>
-#endif
 
 #define PDT_PROPS (0x00EF)
 #define PDT_START (0x00E9)
@@ -168,8 +164,6 @@ struct synaptics_rmi4_device_info {
 	unsigned char config_id[3];
 	struct mutex support_fn_list_mutex;
 	struct list_head support_fn_list;
-	unsigned int package_id;
-	unsigned int package_id_rev;
 };
 
 /*
@@ -204,7 +198,6 @@ struct synaptics_rmi4_device_info {
  * @flip_x: set to TRUE if desired to flip direction on x-axis
  * @flip_y: set to TRUE if desired to flip direction on y-axis
  * @fw_updating: firmware is updating flag
- * @check_build: check the build information for firmware
  * @sensor_sleep: flag to indicate sleep state of sensor
  * @wait: wait queue for touch data polling in interrupt thread
  * @i2c_read: pointer to i2c read function
@@ -263,7 +256,6 @@ struct synaptics_rmi4_data {
 	wait_queue_head_t wait;
 	bool stay_awake;
 	bool staying_awake;
-	bool check_build;
 	int (*i2c_read)(struct synaptics_rmi4_data *pdata, unsigned short addr,
 			unsigned char *data, unsigned short length);
 	int (*i2c_write)(struct synaptics_rmi4_data *pdata, unsigned short addr,
@@ -280,12 +272,6 @@ struct synaptics_rmi4_data {
 	struct pinctrl *ts_pinctrl;
 	struct pinctrl_state *gpio_state_active;
 	struct pinctrl_state *gpio_state_suspend;
-#if defined(CONFIG_SECURE_TOUCH)
-	atomic_t st_enabled;
-	atomic_t st_pending_irqs;
-	struct completion st_powerdown;
-	struct completion st_irq_processed;
-#endif
 	int idle_mode;
 };
 
